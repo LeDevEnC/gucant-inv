@@ -1,26 +1,32 @@
 package gucant.inv;
-import javafx.application.Application;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.*;
 
-public class App extends Application{
-    
+import gucant.inv.utils.NavigationManager;
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+/**7
+ * Main class of the application.
+ */
+public class App extends Application {
+    /**
+     * Start the application.
+     * @param primaryStage The primary stage of the application.
+     */
     @Override
     public void start(Stage primaryStage) {
-        Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        
-        StackPane root = new StackPane();
-        root.getChildren().add(btn);
-
-        Scene scene = new Scene(root, 300, 250);
-
-        primaryStage.setTitle("Hello World!");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        try {
+            NavigationManager navigationManager = NavigationManager.getInstance(primaryStage);
+            navigationManager.addPage("main", "Main.fxml");
+            navigationManager.showPage("main");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    /**
+     * Main method of the application.
+     * @param args The arguments of the application.
+     */
     public static void main(String[] args) {
         launch(args);
     }
