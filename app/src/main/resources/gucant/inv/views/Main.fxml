@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.TextField?>
+
+<BorderPane
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="gucant.inv.controllers.MainViewController"
+    stylesheets="@/gucant/inv/styles/stock-management.css"
+    styleClass="main-container">
+   
+    <!-- Top Navigation Bar -->
+    <top>
+        <HBox styleClass="top-nav" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20"/>
+            </padding>
+            <Label text="Gestion de Stock" styleClass="app-title"/>
+            <TextField fx:id="globalSearchField" promptText="Rechercher dans le stock..." styleClass="global-search" HBox.hgrow="ALWAYS"/>
+            <Button text="Nouveau Produit" styleClass="primary-button"/>
+        </HBox>
+    </top>
+   
+    <!-- Main Content Container -->
+    <center>
+        <VBox spacing="15">
+            <!-- Categories Grid -->
+            <HBox styleClass="categories-grid">
+                <Button text="Processeurs" styleClass="category-button"/>
+                <Button text="Cartes Mères" styleClass="category-button"/>
+                <Button text="Cartes Graphiques" styleClass="category-button"/>
+                <Button text="RAM" styleClass="category-button"/>
+                <Button text="Stockage" styleClass="category-button"/>
+                <Button text="Alimentation" styleClass="category-button"/>
+                <Button text="Boîtiers" styleClass="category-button"/>
+                <Button text="Refroidissement" styleClass="category-button"/>
+                <Button text="Périphériques" styleClass="category-button"/>
+            </HBox>
+            
+            <!-- Products Table -->
+            <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
+                <columns>
+                    <TableColumn text="Référence" prefWidth="100" styleClass="table-column"/>
+                    <TableColumn text="Nom" prefWidth="200" styleClass="table-column"/>
+                    <TableColumn text="Fournisseur" prefWidth="150" styleClass="table-column"/>
+                    <TableColumn text="Prix" prefWidth="100" styleClass="table-column"/>
+                    <TableColumn text="Stock" prefWidth="100" styleClass="table-column"/>
+                    <TableColumn text="Actions" prefWidth="1270" styleClass="table-column"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

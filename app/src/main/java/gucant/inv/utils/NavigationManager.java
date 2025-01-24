@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.util.HashMap;
+import java.io.IOException;
 
 /**
  * Class to manage the navigation between pages of the application.
@@ -14,10 +15,12 @@ public class NavigationManager {
      * Singleton instance of the NavigationManager.
      */
     private static NavigationManager instance;
+
     /**
      * The primary stage of the application.
      */
     private final Stage primaryStage;
+
     /**
      * The pages of the application.
      */
@@ -52,10 +55,11 @@ public class NavigationManager {
         try {
             Parent page = FXMLLoader.load(getClass().getResource("/gucant/inv/views/" + fxmlFile));
             pages.put(name, page);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     /**
      * Show a page of the application.
      * @param name The name of the page.

@@ -24,6 +24,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation libs.guava
+    implementation "org.openjfx:javafx-controls:23"
+    implementation "org.openjfx:javafx-fxml:23"
+
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

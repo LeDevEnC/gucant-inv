@@ -1,0 +1,85 @@
+.root {
+    -fx-font-family: 'Inter', 'Segoe UI', sans-serif;
+    -fx-background-color: #f7fafc;
+}
+
+.main-container {
+    -fx-background-color: white;
+}
+
+/* Top Navigation */
+.top-nav {
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10px;
+}
+
+.app-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: #1A365D;
+    -fx-font-weight: bold;
+    -fx-min-width: 150px;
+}
+
+/* Global Search */
+.global-search {
+    -fx-background-color: #edf2f7;
+    -fx-border-color: #cbd5e0;
+    -fx-border-width: 1px;
+    -fx-padding: 8 12;
+    -fx-background-radius: 2px;
+    -fx-border-radius: 2px;
+}
+
+/* Buttons */
+.primary-button {
+    -fx-background-color: #3182CE;
+    -fx-text-fill: white;
+    -fx-background-radius: 2px;
+    -fx-padding: 8 15;
+    -fx-min-width: 120px;
+}
+
+.primary-button:hover {
+    -fx-background-color: derive(#3182CE, -10%);
+}
+
+/* Categories Grid */
+.categories-grid {
+    -fx-background-color: #f7fafc;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.category-button {
+    -fx-background-color: #edf2f7;
+    -fx-text-fill: #1A365D;
+    -fx-background-radius: 2px;
+    -fx-padding: 8 15;
+    -fx-min-width: 120px;
+    -fx-font-size: 12px;
+}
+
+.category-button:hover {
+    -fx-background-color: #3182CE;
+    -fx-text-fill: white;
+}
+
+/* Table Styling */
+.product-table {
+    -fx-background-color: transparent;
+}
+
+.product-table .column-header {
+    -fx-background-color: #f7fafc;
+    -fx-text-fill: #1A365D;
+    -fx-font-weight: bold;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 1 0;
+}
+
+.table-column-actions {
+    -fx-alignment: CENTER;
+}

@@ -4,7 +4,7 @@ import gucant.inv.utils.NavigationManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/**7
+/**
  * Main class of the application.
  */
 public class App extends Application {
