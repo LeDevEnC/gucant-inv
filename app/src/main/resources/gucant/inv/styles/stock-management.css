@@ -5,6 +5,7 @@
 
 .main-container {
     -fx-background-color: white;
+    -fx-padding: 0;
 }
 
 /* Top Navigation */
@@ -13,6 +14,7 @@
     -fx-border-color: #e2e8f0;
     -fx-border-width: 0 0 1 0;
     -fx-padding: 10px;
+    -fx-spacing: 20px;
 }
 
 .app-title {
@@ -28,21 +30,47 @@
     -fx-border-color: #cbd5e0;
     -fx-border-width: 1px;
     -fx-padding: 8 12;
-    -fx-background-radius: 2px;
-    -fx-border-radius: 2px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+}
+
+.global-search:focused {
+    -fx-border-color: #3182CE;
+    -fx-background-color: white;
 }
 
 /* Buttons */
 .primary-button {
     -fx-background-color: #3182CE;
     -fx-text-fill: white;
-    -fx-background-radius: 2px;
+    -fx-background-radius: 4px;
     -fx-padding: 8 15;
     -fx-min-width: 120px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Selected category*/
+.selected-category {
+    -fx-background-color: #3182CE;
+    -fx-text-fill: white;
+    -fx-background-radius: 4px;
+    -fx-padding: 8 15;
+    -fx-min-width: 120px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
 }
 
 .primary-button:hover {
     -fx-background-color: derive(#3182CE, -10%);
+}
+
+.primary-button:disabled {
+    -fx-background-color: #cbd5e0;
+    -fx-text-fill: #ffffff;
+    -fx-cursor: default;
 }
 
 /* Categories Grid */
@@ -56,10 +84,12 @@
 .category-button {
     -fx-background-color: #edf2f7;
     -fx-text-fill: #1A365D;
-    -fx-background-radius: 2px;
+    -fx-background-radius: 4px;
     -fx-padding: 8 15;
     -fx-min-width: 120px;
     -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
 }
 
 .category-button:hover {
@@ -69,7 +99,13 @@
 
 /* Table Styling */
 .product-table {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+    -fx-padding: 10px;
+    -fx-table-cell-border-color: #e2e8f0;
+    -fx-table-header-border-color: #cbd5e0;
 }
 
 .product-table .column-header {
@@ -78,8 +114,31 @@
     -fx-font-weight: bold;
     -fx-border-color: #e2e8f0;
     -fx-border-width: 0 0 1 0;
+    -fx-padding: 8 10;
+}
+
+.product-table .table-row-cell:odd {
+    -fx-background-color: #f9fbfd;
+}
+
+.product-table .table-row-cell:even {
+    -fx-background-color: #ffffff;
+}
+
+.product-table .table-row-cell:hover {
+    -fx-background-color: #e6effa;
 }
 
 .table-column-actions {
     -fx-alignment: CENTER;
+}
+
+/* ScrollPane Styling */
+.scroll-pane {
+    -fx-background: white;
+    -fx-padding: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background: white;
 }

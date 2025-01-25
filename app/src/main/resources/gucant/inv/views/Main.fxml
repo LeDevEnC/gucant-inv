@@ -31,31 +31,33 @@
    
     <!-- Main Content Container -->
     <center>
-        <VBox spacing="15">
+        <VBox spacing="15" VBox.vgrow="ALWAYS">
             <!-- Categories Grid -->
-            <HBox styleClass="categories-grid">
-                <Button text="Processeurs" styleClass="category-button"/>
-                <Button text="Cartes Mères" styleClass="category-button"/>
-                <Button text="Cartes Graphiques" styleClass="category-button"/>
-                <Button text="RAM" styleClass="category-button"/>
-                <Button text="Stockage" styleClass="category-button"/>
-                <Button text="Alimentation" styleClass="category-button"/>
-                <Button text="Boîtiers" styleClass="category-button"/>
-                <Button text="Refroidissement" styleClass="category-button"/>
-                <Button text="Périphériques" styleClass="category-button"/>
+            <HBox styleClass="categories-grid" spacing="10" HBox.hgrow="ALWAYS">
+                <Button text="Tout" styleClass="selected-category" HBox.hgrow="ALWAYS"/>
+                <Button text="Processeurs" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Cartes Mères" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Cartes Graphiques" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="RAM" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Stockage" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Alimentation" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Boîtiers" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Refroidissement" styleClass="category-button" HBox.hgrow="ALWAYS"/>
+                <Button text="Périphériques" styleClass="category-button" HBox.hgrow="ALWAYS"/>
             </HBox>
             
             <!-- Products Table -->
-            <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
-                <columns>
-                    <TableColumn text="Référence" prefWidth="100" styleClass="table-column"/>
-                    <TableColumn text="Nom" prefWidth="200" styleClass="table-column"/>
-                    <TableColumn text="Fournisseur" prefWidth="150" styleClass="table-column"/>
-                    <TableColumn text="Prix" prefWidth="100" styleClass="table-column"/>
-                    <TableColumn text="Stock" prefWidth="100" styleClass="table-column"/>
-                    <TableColumn text="Actions" prefWidth="1270" styleClass="table-column"/>
-                </columns>
-            </TableView>
+        <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
+            <columns>
+                <TableColumn text="Référence" styleClass="table-column" />
+                <TableColumn text="Nom" styleClass="table-column" />
+                <TableColumn text="Fournisseur" styleClass="table-column" />
+                <TableColumn text="Prix" styleClass="table-column" />
+                <TableColumn text="Stock" styleClass="table-column" />
+                <TableColumn text="Actions" styleClass="table-column" />
+            </columns>
+        </TableView>
+
         </VBox>
     </center>
 </BorderPane>

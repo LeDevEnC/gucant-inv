@@ -28,6 +28,8 @@ public class App extends Application {
      * @param args The arguments of the application.
      */
     public static void main(String[] args) {
+        TestDAO.main(args);
         launch(args);
+
     }
 }
