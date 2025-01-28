@@ -13,7 +13,7 @@
 
 <BorderPane
     xmlns:fx="http://javafx.com/fxml"
-    fx:controller="gucant.inv.controllers.MainViewController"
+    fx:controller="gucant.inv.controllers.MainController"
     stylesheets="@/gucant/inv/styles/stock-management.css"
     styleClass="main-container">
    
@@ -25,7 +25,7 @@
             </padding>
             <Label text="Gestion de Stock" styleClass="app-title"/>
             <TextField fx:id="globalSearchField" promptText="Rechercher dans le stock..." styleClass="global-search" HBox.hgrow="ALWAYS"/>
-            <Button text="Nouveau Produit" styleClass="primary-button"/>
+            <Button text="Nouveau Produit" styleClass="primary-button" onAction="#handleNewProduct"/>
         </HBox>
     </top>
    

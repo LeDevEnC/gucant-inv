@@ -15,9 +15,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            NavigationManager navigationManager = NavigationManager.getInstance(primaryStage);
-            navigationManager.addPage("main", "Main.fxml");
-            navigationManager.showPage("main");
+            NavigationManager.getInstance().setPrimaryStage(primaryStage);
+            NavigationManager.getInstance().navigateTo("/gucant/inv/views/Main.fxml", "Inventory Management");
         } catch (Exception e) {
             e.printStackTrace();
         }
