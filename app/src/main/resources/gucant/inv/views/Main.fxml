@@ -34,7 +34,7 @@
     <center>
         <VBox spacing="5">
             <padding>
-                <Insets top="0" right="0" bottom="10" left="0"/> <!-- Utilisation correcte de Insets ici -->
+                <Insets top="0" right="0" bottom="10" left="0"/>
             </padding>
             <!-- Categories Grid -->
             <ScrollPane fitToWidth="true" styleClass="categories-scroll">
@@ -55,12 +55,13 @@
             <!-- Products Table -->
             <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
                 <columns>
-                    <TableColumn text="Référence" styleClass="table-column"/>
-                    <TableColumn text="Nom" styleClass="table-column"/>
-                    <TableColumn text="Fournisseur" styleClass="table-column"/>
-                    <TableColumn text="Prix" styleClass="table-column"/>
-                    <TableColumn text="Stock" styleClass="table-column"/>
-                    <TableColumn text="Actions" styleClass="table-column"/>
+                    <TableColumn fx:id="colReference" text="Référence" styleClass="table-column"/>
+                    <TableColumn fx:id="colName" text="Nom" styleClass="table-column"/>
+                    <TableColumn fx:id="colSupplier" text="Fournisseur" styleClass="table-column"/>
+                    <TableColumn fx:id="colCategory" text="Catégorie" styleClass="table-column"/>
+                    <TableColumn fx:id="colPrice" text="Prix total" styleClass="table-column"/>
+                    <TableColumn fx:id="colStock" text="Stock" styleClass="table-column"/>
+                    <TableColumn fx:id="colActions" text="Actions" styleClass="table-column"/>
                 </columns>
             </TableView>
         </VBox>

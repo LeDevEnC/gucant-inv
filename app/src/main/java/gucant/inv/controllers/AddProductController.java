@@ -11,30 +11,39 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import gucant.inv.models.dao.CategoryDAO;
+import gucant.inv.models.dao.SupplierDAO;
 
 public class AddProductController {
+
     @FXML
     private TextField nameField;
-
     @FXML
     private TextField specificationsField;
-
     @FXML
     private TextField quantityField;
-
     @FXML
     private TextField priceField;
-
     @FXML
     private ComboBox<String> categoryBox;
-
     @FXML
     private ComboBox<String> supplierBox;
+    
 
     private ProduitDAO produitDAO;
+    private CategoryDAO categoryDAO;
+    private SupplierDAO supplierDAO;
 
     public AddProductController() {
         produitDAO = new ProduitDAO();
+        categoryDAO = new CategoryDAO();
+        supplierDAO = new SupplierDAO();
+    }
+
+    @FXML
+    public void initialize() {
+        categoryBox.getItems().addAll(categoryDAO.getAllCategories());
+        supplierBox.getItems().addAll(supplierDAO.getAllSuppliers());
     }
 
     @FXML
@@ -57,7 +66,7 @@ public class AddProductController {
 
             System.out.println("Product added: " + produit.getName());
 
-            // Retour à la vue principale ou fermeture de la fenêtre
+            // Fermer la fenêtre
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.close();
 
@@ -70,8 +79,8 @@ public class AddProductController {
 
     @FXML
     private void handleCancel(ActionEvent event) {
-        // Fermer la fenêtre sans sauvegarder
         Stage stage = (Stage) nameField.getScene().getWindow();
         stage.close();
     }
 }
+

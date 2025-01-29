@@ -2,6 +2,7 @@ package gucant.inv;
 
 import gucant.inv.utils.NavigationManager;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 /**
@@ -17,6 +18,11 @@ public class App extends Application {
         try {
             NavigationManager.getInstance().setPrimaryStage(primaryStage);
             NavigationManager.getInstance().navigateTo("/gucant/inv/views/Main.fxml", "Inventory Management");
+            primaryStage.setOnCloseRequest(event -> {
+                System.out.println("Fermeture de l'application");
+                Platform.exit();  
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -29,6 +35,7 @@ public class App extends Application {
     public static void main(String[] args) {
         TestDAO.main(args);
         launch(args);
+        
 
     }
 }

@@ -38,7 +38,7 @@
         <TextField fx:id="quantityField" promptText="Quantité en stock" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
         <!-- Prix -->
-        <Label text="Prix (en €) :" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+        <Label text="Prix unitaire (en €) :" GridPane.rowIndex="3" GridPane.columnIndex="0" />
         <TextField fx:id="priceField" promptText="Prix unitaire" GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
         <!-- Catégorie -->

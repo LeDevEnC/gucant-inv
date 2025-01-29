@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import gucant.inv.controllers.MainController;
+
 public class NavigationManager {
     private static NavigationManager instance;
     private Stage primaryStage;
@@ -48,4 +50,5 @@ public class NavigationManager {
             e.printStackTrace();
         }
     }
+
 }
