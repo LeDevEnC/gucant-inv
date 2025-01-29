@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
 
 <BorderPane
     xmlns:fx="http://javafx.com/fxml"
@@ -31,33 +32,37 @@
    
     <!-- Main Content Container -->
     <center>
-        <VBox spacing="15" VBox.vgrow="ALWAYS">
+        <VBox spacing="5">
+            <padding>
+                <Insets top="0" right="0" bottom="10" left="0"/> <!-- Utilisation correcte de Insets ici -->
+            </padding>
             <!-- Categories Grid -->
-            <HBox styleClass="categories-grid" spacing="10" HBox.hgrow="ALWAYS">
-                <Button text="Tout" styleClass="selected-category" HBox.hgrow="ALWAYS"/>
-                <Button text="Processeurs" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Cartes Mères" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Cartes Graphiques" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="RAM" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Stockage" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Alimentation" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Boîtiers" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Refroidissement" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-                <Button text="Périphériques" styleClass="category-button" HBox.hgrow="ALWAYS"/>
-            </HBox>
+            <ScrollPane fitToWidth="true" styleClass="categories-scroll">
+                <FlowPane fx:id="categoryGrid" styleClass="categoriesGrid" hgap="10" vgap="10">
+                    <Button text="Tout" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Processeurs" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Cartes Mères" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Cartes Graphiques" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="RAM" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Stockage" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Alimentation" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Boîtiers" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Refroidissement" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <Button text="Périphériques" styleClass="category-button" onAction="#handleCategorySelection"/>
+                </FlowPane>
+            </ScrollPane>
             
             <!-- Products Table -->
-        <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
-            <columns>
-                <TableColumn text="Référence" styleClass="table-column" />
-                <TableColumn text="Nom" styleClass="table-column" />
-                <TableColumn text="Fournisseur" styleClass="table-column" />
-                <TableColumn text="Prix" styleClass="table-column" />
-                <TableColumn text="Stock" styleClass="table-column" />
-                <TableColumn text="Actions" styleClass="table-column" />
-            </columns>
-        </TableView>
-
+            <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
+                <columns>
+                    <TableColumn text="Référence" styleClass="table-column"/>
+                    <TableColumn text="Nom" styleClass="table-column"/>
+                    <TableColumn text="Fournisseur" styleClass="table-column"/>
+                    <TableColumn text="Prix" styleClass="table-column"/>
+                    <TableColumn text="Stock" styleClass="table-column"/>
+                    <TableColumn text="Actions" styleClass="table-column"/>
+                </columns>
+            </TableView>
         </VBox>
     </center>
 </BorderPane>

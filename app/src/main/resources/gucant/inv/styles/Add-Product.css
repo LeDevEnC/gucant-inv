@@ -1,0 +1,122 @@
+/* Global Styles */
+.root {
+    -fx-font-family: 'Inter', 'Segoe UI', sans-serif;
+    -fx-background-color: #f7fafc;
+}
+
+/* Main Container */
+.main-container {
+    -fx-background-color: white;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+
+/* Header */
+.header {
+    -fx-padding: 10px 20px;
+    -fx-border-color: #e2e8f0;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.app-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: #1A365D;
+    -fx-font-weight: bold;
+}
+
+/* Form Grid */
+.form-grid {
+    -fx-padding: 10px 20px;
+    -fx-hgap: 15px;
+    -fx-vgap: 15px;
+}
+
+.form-grid Label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #2D3748;
+    -fx-font-weight: bold;
+}
+
+.form-grid TextField,
+.form-grid ComboBox {
+    -fx-background-color: #edf2f7;
+    -fx-border-color: #cbd5e0;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 12px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-font-size: 14px;
+}
+
+.form-grid TextField:focused,
+.form-grid ComboBox:focused {
+    -fx-border-color: #3182CE;
+    -fx-background-color: white;
+    -fx-effect: dropshadow(gaussian, #90cdf4, 4, 0.2, 0, 0);
+}
+
+/* Action Buttons */
+.action-buttons {
+    -fx-padding: 10px 20px;
+    -fx-spacing: 10px;
+}
+
+.primary-button {
+    -fx-background-color: #3182CE;
+    -fx-text-fill: white;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0.2, 0, 2);
+}
+
+.primary-button:hover {
+    -fx-background-color: #2B6CB0;
+}
+
+.secondary-button {
+    -fx-background-color: #cbd5e0;
+    -fx-text-fill: #2D3748;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #a0aec0;
+}
+/* Categories */
+.categories-grid {
+    -fx-padding: 10px 20px;
+    -fx-spacing: 10px;
+    -fx-alignment: center;
+}
+
+.category-button {
+    -fx-background-color: #edf2f7;
+    -fx-text-fill: #1A365D;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px 20px;
+    -fx-min-width: 130px;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.category-button:hover {
+    -fx-background-color: #3182CE;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, #90cdf4, 3, 0.2, 0, 0);
+}
+
+.selected-category {
+    -fx-background-color: #3182CE;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+

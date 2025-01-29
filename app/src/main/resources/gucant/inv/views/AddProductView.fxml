@@ -10,7 +10,7 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="gucant.inv.controllers.AddProductController"
-      stylesheets="@/gucant/inv/styles/stock-management.css"
+      stylesheets="@/gucant/inv/styles/Add-Product.css"
       spacing="20"
       styleClass="main-container">
    
