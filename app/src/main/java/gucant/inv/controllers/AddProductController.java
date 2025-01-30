@@ -1,9 +1,6 @@
 package gucant.inv.controllers;
 
-import gucant.inv.utils.NavigationManager;
-
 import java.io.IOException;
-
 import gucant.inv.models.dao.ProduitDAO;
 import gucant.inv.models.data.Produit;
 import javafx.event.ActionEvent;
@@ -15,7 +12,6 @@ import gucant.inv.models.dao.CategoryDAO;
 import gucant.inv.models.dao.SupplierDAO;
 
 public class AddProductController {
-
     @FXML
     private TextField nameField;
     @FXML
@@ -28,8 +24,7 @@ public class AddProductController {
     private ComboBox<String> categoryBox;
     @FXML
     private ComboBox<String> supplierBox;
-    
-
+   
     private ProduitDAO produitDAO;
     private CategoryDAO categoryDAO;
     private SupplierDAO supplierDAO;
@@ -63,15 +58,14 @@ public class AddProductController {
 
             Produit produit = new Produit(name, specifications, quantity, price, categoryId, supplierId);
             produitDAO.create(produit);
-
             System.out.println("Product added: " + produit.getName());
-
+            
+            // Notifier MainController du changement
+            MainController.notifyProductAdded();
+            
             // Fermer la fenêtre
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.close();
-
-            // Facultatif : recharger la vue principale si nécessaire
-            NavigationManager.getInstance().navigateTo("/gucant/inv/views/MainView.fxml", "Main View");
         } catch (NumberFormatException e) {
             System.out.println("Invalid input: " + e.getMessage());
         }
@@ -83,4 +77,3 @@ public class AddProductController {
         stage.close();
     }
 }
-

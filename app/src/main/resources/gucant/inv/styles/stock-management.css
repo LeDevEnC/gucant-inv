@@ -167,3 +167,27 @@
     -fx-min-height: 0;
     -fx-pref-height: 0;
 }
+
+/* Style pour les alertes */
+.alert {
+    -fx-background-color: #f8d7da;
+    -fx-border-color: #f5c6cb;
+    -fx-text-fill: #721c24;
+    -fx-font-size: 14px;
+    -fx-padding: 15px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+}
+
+.alert .button {
+    -fx-background-color: #f5c6cb;
+    -fx-text-fill: #721c24;
+    -fx-background-radius: 6px;
+    -fx-padding: 10px 20px;
+    -fx-font-size: 14px;
+    -fx-border-radius: 6px;
+}
+
+.alert .button:hover {
+    -fx-background-color: #f1a8b8;
+}

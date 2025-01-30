@@ -32,9 +32,9 @@
    
     <!-- Main Content Container -->
     <center>
-        <VBox spacing="5">
+        <VBox spacing="0">
             <padding>
-                <Insets top="0" right="0" bottom="10" left="0"/>
+                <Insets top="0" right="0" bottom="0" left="0"/>
             </padding>
             <!-- Categories Grid -->
             <ScrollPane fitToWidth="true" styleClass="categories-scroll">
