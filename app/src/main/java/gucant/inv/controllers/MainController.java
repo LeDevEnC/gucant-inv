@@ -1,6 +1,7 @@
 package gucant.inv.controllers;
 
 import java.util.Optional;
+import java.text.Normalizer;
 
 import gucant.inv.models.dao.ProduitDAO;
 import gucant.inv.models.data.Produit;
@@ -8,6 +9,8 @@ import gucant.inv.utils.NavigationManager;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -26,30 +29,49 @@ public class MainController {
 
     @FXML
     private TableColumn<Produit, String> colReference;
+    
     @FXML
     private TableColumn<Produit, String> colName;
+    
     @FXML
     private TableColumn<Produit, String> colSupplier;
+    
     @FXML
     private TableColumn<Produit, Double> colPrice;
+    
     @FXML
     private TableColumn<Produit, Integer> colStock;
+    
     @FXML
     private TableColumn<Produit, Void> colActions;
+    
     @FXML
     private TableColumn<Produit, String> colCategory;
 
+    @FXML
+    private Button btnTout;
+
     private ProduitDAO produitDAO;
     private ObservableList<Produit> produitList;
+    private FilteredList<Produit> filteredData;
+    private String currentCategory = "Tout";
 
     public MainController() {
         produitDAO = new ProduitDAO();
+    }
+
+    private String normalizeString(String str) {
+        return Normalizer
+            .normalize(str, Normalizer.Form.NFD)
+            .replaceAll("\\p{M}", "")
+            .toLowerCase();
     }
 
     @FXML
     private void initialize() {
         instance = this;
         
+        // Configuration des colonnes
         colReference.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
@@ -59,9 +81,9 @@ public class MainController {
             double totalPrice = produit.getPrix() * produit.getQuantite();
             return new SimpleObjectProperty<>(totalPrice);
         });
-
         colStock.setCellValueFactory(new PropertyValueFactory<>("quantite"));
 
+        // Configuration de la colonne d'actions
         colActions.setCellFactory(param -> new TableCell<>() {
             private final Button btnAdd = new Button("+");
             private final Button btnRemove = new Button("-");
@@ -85,12 +107,23 @@ public class MainController {
             }
         });
 
+        // Initialisation des données
         loadProducts();
+        
+        // Set "Tout" button as selected by default
+        btnTout.getStyleClass().add("selected-category");
     }
 
     private void loadProducts() {
         produitList = FXCollections.observableArrayList(produitDAO.getAll());
-        productsTable.setItems(produitList);
+        
+        // Create filtered list
+        filteredData = new FilteredList<>(produitList, p -> true);
+        
+        // Bind filtered list to table
+        SortedList<Produit> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(productsTable.comparatorProperty());
+        productsTable.setItems(sortedData);
     }
 
     private void modifyStock(Produit produit, int amount) {
@@ -132,6 +165,16 @@ public class MainController {
     public void refreshTable() {
         produitList.clear();
         produitList.addAll(produitDAO.getAll());
+        
+        // Reapply current category filter with accent handling
+        filteredData.setPredicate(product -> {
+            if (currentCategory.equals("Tout")) {
+                return true;
+            }
+            return normalizeString(product.getCategoryName())
+                   .equals(normalizeString(currentCategory));
+        });
+        
         productsTable.refresh();
     }
 
@@ -149,16 +192,23 @@ public class MainController {
     @FXML
     private void handleCategorySelection(ActionEvent event) {
         Button clickedButton = (Button) event.getSource();
+        currentCategory = clickedButton.getText();
 
+        // Update button styles
         for (javafx.scene.Node node : categoryGrid.getChildren()) {
             if (node instanceof Button button) {
-                if (!button.getStyleClass().contains("category-button")) {
-                    button.getStyleClass().add("category-button");
-                }
                 button.getStyleClass().remove("selected-category");
             }
         }
-
         clickedButton.getStyleClass().add("selected-category");
+
+        // Update filter with accent-insensitive comparison
+        filteredData.setPredicate(product -> {
+            if (currentCategory.equals("Tout")) {
+                return true;
+            }
+            return normalizeString(product.getCategoryName())
+                   .equals(normalizeString(currentCategory));
+        });
     }
 }

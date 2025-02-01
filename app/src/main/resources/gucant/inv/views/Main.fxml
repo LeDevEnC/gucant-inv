@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.FlowPane?>
+<?import javafx.geometry.Insets?>
 
-<BorderPane
-    xmlns:fx="http://javafx.com/fxml"
-    fx:controller="gucant.inv.controllers.MainController"
-    stylesheets="@/gucant/inv/styles/stock-management.css"
-    styleClass="main-container">
-   
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gucant.inv.controllers.MainController"
+            stylesheets="@../styles/stock-management.css"
+            styleClass="main-container">
+    
     <!-- Top Navigation Bar -->
     <top>
         <HBox styleClass="top-nav" alignment="CENTER_LEFT" spacing="20">
@@ -29,17 +29,17 @@
             <Button text="Nouveau Produit" styleClass="primary-button" onAction="#handleNewProduct"/>
         </HBox>
     </top>
-   
+
     <!-- Main Content Container -->
     <center>
         <VBox spacing="0">
-            <padding>
-                <Insets top="0" right="0" bottom="0" left="0"/>
-            </padding>
             <!-- Categories Grid -->
             <ScrollPane fitToWidth="true" styleClass="categories-scroll">
                 <FlowPane fx:id="categoryGrid" styleClass="categoriesGrid" hgap="10" vgap="10">
-                    <Button text="Tout" styleClass="category-button" onAction="#handleCategorySelection"/>
+                    <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                    </padding>
+                    <Button fx:id="btnTout" text="Tout" styleClass="category-button, selected-category" onAction="#handleCategorySelection"/>
                     <Button text="Processeurs" styleClass="category-button" onAction="#handleCategorySelection"/>
                     <Button text="Cartes Mères" styleClass="category-button" onAction="#handleCategorySelection"/>
                     <Button text="Cartes Graphiques" styleClass="category-button" onAction="#handleCategorySelection"/>
@@ -51,7 +51,7 @@
                     <Button text="Périphériques" styleClass="category-button" onAction="#handleCategorySelection"/>
                 </FlowPane>
             </ScrollPane>
-            
+
             <!-- Products Table -->
             <TableView fx:id="productsTable" VBox.vgrow="ALWAYS" styleClass="product-table">
                 <columns>
