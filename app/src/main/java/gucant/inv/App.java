@@ -18,6 +18,10 @@ public class App extends Application {
         try {
             NavigationManager.getInstance().setPrimaryStage(primaryStage);
             NavigationManager.getInstance().navigateTo("/gucant/inv/views/Main.fxml", "Inventory Management");
+            primaryStage.setMinWidth(1200);
+            primaryStage.setMinHeight(800);
+            primaryStage.setWidth(1600);
+            primaryStage.setHeight(900);
             primaryStage.setOnCloseRequest(event -> {
                 System.out.println("Fermeture de l'application");
                 Platform.exit();  

@@ -191,3 +191,7 @@
 .alert .button:hover {
     -fx-background-color: #f1a8b8;
 }
+.table-view .column-header .label {
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
