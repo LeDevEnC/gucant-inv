@@ -15,15 +15,16 @@ public class ProduitDAO implements ProduitDAOInterface {
 
     @Override
     public void create(Produit produit) {
-        String sql = "INSERT INTO Produit (name, specifications, quantite, prix, category_id, supplier_id) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Produit (name, specifications, quantite, PrixHT, PrixTTC, category_id, supplier_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, produit.getName());
             pstmt.setString(2, produit.getSpecifications());
             pstmt.setInt(3, produit.getQuantite());
-            pstmt.setDouble(4, produit.getPrix());
-            pstmt.setInt(5, produit.getCategoryId());
-            pstmt.setInt(6, produit.getSupplierId());
+            pstmt.setDouble(4, produit.getPrixHT());
+            pstmt.setDouble(5, produit.getPrixTTC());
+            pstmt.setInt(6, produit.getCategoryId());
+            pstmt.setInt(7, produit.getSupplierId());
             pstmt.executeUpdate();
     
             // Récupération de l'ID généré
@@ -50,7 +51,8 @@ public class ProduitDAO implements ProduitDAOInterface {
                         rs.getString("name"),
                         rs.getString("specifications"),
                         rs.getInt("quantite"),
-                        rs.getDouble("prix"),
+                        rs.getDouble("prixHT"),
+                        rs.getDouble("prixTTC"),
                         rs.getInt("category_id"),
                         rs.getInt("supplier_id"));
             }
@@ -63,16 +65,17 @@ public class ProduitDAO implements ProduitDAOInterface {
 
     @Override
     public void update(Produit produit) {
-        String sql = "UPDATE Produit SET name = ?, specifications = ?, quantite = ?, prix = ?, category_id = ?, supplier_id = ? WHERE name = ?";
+        String sql = "UPDATE Produit SET name = ?, specifications = ?, quantite = ?, PrixHT = ?, PrixTTC = ?, category_id = ?, supplier_id = ? WHERE name = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, produit.getName());
             pstmt.setString(2, produit.getSpecifications());
             pstmt.setInt(3, produit.getQuantite());
-            pstmt.setDouble(4, produit.getPrix());
-            pstmt.setInt(5, produit.getCategoryId());
-            pstmt.setInt(6, produit.getSupplierId());
-            pstmt.setString(7, produit.getName());
+            pstmt.setDouble(4, produit.getPrixHT());
+            pstmt.setDouble(5, produit.getPrixTTC());
+            pstmt.setInt(6, produit.getCategoryId());
+            pstmt.setInt(7, produit.getSupplierId());
+            pstmt.setString(8, produit.getName());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,7 +112,8 @@ public class ProduitDAO implements ProduitDAOInterface {
                         rs.getString("name"),
                         rs.getString("specifications"),
                         rs.getInt("quantite"),
-                        rs.getDouble("prix"),
+                        rs.getDouble("prixHT"),
+                        rs.getDouble("prixTTC"),
                         rs.getInt("category_id"),
                         rs.getInt("supplier_id"));
                 produit.setCategoryName(rs.getString("categorie_name")); // Correspond au vrai nom

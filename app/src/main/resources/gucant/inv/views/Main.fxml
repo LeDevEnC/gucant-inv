@@ -57,7 +57,8 @@
                     <TableColumn fx:id="colSpecifications" text="Spécifications" styleClass="table-column"/>
                     <TableColumn fx:id="colSupplier" text="Fournisseur" styleClass="table-column"/>
                     <TableColumn fx:id="colCategory" text="Catégorie" styleClass="table-column"/>
-                    <TableColumn fx:id="colPrice" text="Prix total" styleClass="table-column"/>
+                    <TableColumn fx:id="colPriceHT" text="Prix HT" styleClass="table-column"/>
+                    <TableColumn fx:id="colPriceTTC" text="Prix TTC" styleClass="table-column"/>
                     <TableColumn fx:id="colStock" text="Stock" styleClass="table-column"/>
                     <TableColumn fx:id="colActions" text="Actions" styleClass="table-column"/>
                 </columns>

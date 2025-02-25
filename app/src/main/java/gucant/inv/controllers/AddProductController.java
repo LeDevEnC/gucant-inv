@@ -21,15 +21,19 @@ public class AddProductController {
     @FXML
     private TextField quantityField;
     @FXML
-    private TextField priceField;
+    private TextField priceHTField;
+    @FXML
+    private TextField priceTTCField;
     @FXML
     private ComboBox<String> categoryBox;
     @FXML
     private ComboBox<String> supplierBox;
-   
+
     private ProduitDAO produitDAO;
     private CategoryDAO categoryDAO;
     private SupplierDAO supplierDAO;
+
+    private static final double TVA_RATE = 0.2; // Assuming a 20% VAT rate
 
     public AddProductController() {
         produitDAO = new ProduitDAO();
@@ -37,20 +41,63 @@ public class AddProductController {
         supplierDAO = new SupplierDAO();
     }
 
+    private boolean isUpdating = false;
+
     @FXML
     public void initialize() {
         categoryBox.getItems().addAll(categoryDAO.getAllCategories());
         supplierBox.getItems().addAll(supplierDAO.getAllSuppliers());
+
+        // Remplacer les deux listeners existants par ceux-ci
+        priceHTField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdating) {
+                try {
+                    isUpdating = true;
+                    if (newValue.isEmpty()) {
+                        priceTTCField.setText("");
+                    } else {
+                        String cleanValue = newValue.replace(",", ".");
+                        double priceHT = Double.parseDouble(cleanValue);
+                        double priceTTC = priceHT * (1 + TVA_RATE);
+                        priceTTCField.setText(String.format("%.2f", priceTTC));
+                    }
+                } catch (NumberFormatException e) {
+                    priceTTCField.setText("");
+                } finally {
+                    isUpdating = false;
+                }
+            }
+        });
+        
+        // Listener pour le prix TTC
+        priceTTCField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdating) {
+                try {
+                    isUpdating = true;
+                    if (newValue.isEmpty()) {
+                        priceHTField.setText("");
+                    } else {
+                        String cleanValue = newValue.replace(",", ".");
+                        double priceTTC = Double.parseDouble(cleanValue);
+                        double priceHT = priceTTC / (1 + TVA_RATE); // Correction de la formule
+                        priceHTField.setText(String.format("%.2f", priceHT));
+                    }
+                } catch (NumberFormatException e) {
+                    priceHTField.setText("");
+                } finally {
+                    isUpdating = false;
+                }
+            }
+        });
+        
     }
 
     private boolean isProductSimilarToExisting(String newProductName) {
-        // Récupérer tous les noms de produits existants
         List<String> existingProductNames = produitDAO.getAll()
-            .stream()
-            .map(Produit::getName)
-            .collect(Collectors.toList());
+                .stream()
+                .map(Produit::getName)
+                .collect(Collectors.toList());
 
-        // Vérifier si un produit similaire existe
         for (String existingName : existingProductNames) {
             if (StringSimilarity.areSimilar(newProductName, existingName)) {
                 return true;
@@ -64,7 +111,7 @@ public class AddProductController {
         alert.setTitle("Produit similaire détecté");
         alert.setHeaderText("Un produit similaire existe déjà");
         alert.setContentText("Le produit '" + productName + "' semble être similaire à un produit existant. " +
-                           "Veuillez vérifier la liste des produits existants.");
+                "Veuillez vérifier la liste des produits existants.");
         alert.showAndWait();
     }
 
@@ -73,12 +120,11 @@ public class AddProductController {
         try {
             String name = nameField.getText();
             String specifications = specificationsField.getText();
-            
-            // Vérifier les champs vides
-            if (name.isEmpty() || specifications.isEmpty() || 
-                categoryBox.getSelectionModel().getSelectedIndex() == -1 || 
-                supplierBox.getSelectionModel().getSelectedIndex() == -1) {
-                
+
+            if (name.isEmpty() || specifications.isEmpty() ||
+                    categoryBox.getSelectionModel().getSelectedIndex() == -1 ||
+                    supplierBox.getSelectionModel().getSelectedIndex() == -1) {
+
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur de saisie");
                 alert.setHeaderText("Champs manquants");
@@ -87,21 +133,20 @@ public class AddProductController {
                 return;
             }
 
-            // Vérifier si un produit similaire existe
             if (isProductSimilarToExisting(name)) {
                 showSimilarProductAlert(name);
                 return;
             }
 
-            // Vérifier et convertir les valeurs numériques
-            int quantity = Integer.parseInt(quantityField.getText());
-            double price = Double.parseDouble(priceField.getText());
-            
-            if (quantity < 0 || price < 0) {
+            int quantity = Integer.parseInt(quantityField.getText().replace(",", "."));
+            double priceHT = Double.parseDouble(priceHTField.getText().replace(",", "."));
+            double priceTTC = Double.parseDouble(priceTTCField.getText().replace(",", "."));
+
+            if (quantity < 0 || priceHT < 0 || priceTTC < 0) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur de saisie");
                 alert.setHeaderText("Valeurs invalides");
-                alert.setContentText("La quantité et le prix doivent être positifs !");
+                alert.setContentText("La quantité et les prix doivent être positifs !");
                 alert.showAndWait();
                 return;
             }
@@ -109,13 +154,11 @@ public class AddProductController {
             int categoryId = categoryBox.getSelectionModel().getSelectedIndex() + 1;
             int supplierId = supplierBox.getSelectionModel().getSelectedIndex() + 1;
 
-            Produit produit = new Produit(name, specifications, quantity, price, categoryId, supplierId);
+            Produit produit = new Produit(name, specifications, quantity, priceHT, priceTTC, categoryId, supplierId);
             produitDAO.create(produit);
-            
-            // Notifier MainController du changement
+
             MainController.notifyProductAdded();
-           
-            // Fermer la fenêtre
+
             Stage stage = (Stage) nameField.getScene().getWindow();
             stage.close();
 
@@ -123,7 +166,7 @@ public class AddProductController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur de saisie");
             alert.setHeaderText("Format invalide");
-            alert.setContentText("La quantité et le prix doivent être des nombres valides !");
+            alert.setContentText("La quantité et les prix doivent être des nombres valides !");
             alert.showAndWait();
         }
     }

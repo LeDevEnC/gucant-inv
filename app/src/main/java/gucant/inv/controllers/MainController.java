@@ -39,7 +39,9 @@ public class MainController {
     @FXML
     private TableColumn<Produit, String> colSupplier;
     @FXML
-    private TableColumn<Produit, Double> colPrice;
+    private TableColumn<Produit, Double> colPriceHT;
+    @FXML
+    private TableColumn<Produit, Double> colPriceTTC;
     @FXML
     private TableColumn<Produit, Integer> colStock;
     @FXML
@@ -59,6 +61,7 @@ public class MainController {
     private ObservableList<Produit> produitList;
     private FilteredList<Produit> filteredData;
     private String currentCategory = "Tout";
+    private static final double TVA_RATE = 0.2;
 
     public MainController() {
         produitDAO = new ProduitDAO();
@@ -80,11 +83,8 @@ public class MainController {
         colSpecifications.setCellValueFactory(new PropertyValueFactory<>("specifications"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         colSupplier.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
-        colPrice.setCellValueFactory(cellData -> {
-            Produit produit = cellData.getValue();
-            double totalPrice = produit.getPrix() * produit.getQuantite();
-            return new SimpleObjectProperty<>(totalPrice);
-        });
+        colPriceHT.setCellValueFactory(new PropertyValueFactory<>("prixHT"));
+        colPriceTTC.setCellValueFactory(new PropertyValueFactory<>("prixTTC"));
         colStock.setCellValueFactory(new PropertyValueFactory<>("quantite"));
 
         // Empêcher le redimensionnement des colonnes
@@ -93,7 +93,8 @@ public class MainController {
         colSpecifications.setResizable(false);
         colSupplier.setResizable(false);
         colCategory.setResizable(false);
-        colPrice.setResizable(false);
+        colPriceHT.setResizable(false);
+        colPriceTTC.setResizable(false);
         colStock.setResizable(false);
         colActions.setResizable(false);
 
@@ -106,13 +107,12 @@ public class MainController {
             colSpecifications.setPrefWidth(totalWidth * 0.20);
             colSupplier.setPrefWidth(totalWidth * 0.10);
             colCategory.setPrefWidth(totalWidth * 0.10);
-            colPrice.setPrefWidth(totalWidth * 0.10);
+            colPriceHT.setPrefWidth(totalWidth * 0.10);
+            colPriceTTC.setPrefWidth(totalWidth * 0.10);
             colStock.setPrefWidth(totalWidth * 0.05);
-            colActions.setPrefWidth(totalWidth * 0.25);
+            colActions.setPrefWidth(totalWidth * 0.15);
         });
-
-        // Empêcher l'agrandissement manuel
-        productsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        productsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
 
         // Configuration des actions
         colActions.setCellFactory(param -> new TableCell<>() {
@@ -162,12 +162,12 @@ public class MainController {
 
             String lowerCaseFilter = normalizeString(searchText);
 
-            return matchesCategory && (
-                    normalizeString(product.getName()).contains(lowerCaseFilter) ||
+            return matchesCategory && (normalizeString(product.getName()).contains(lowerCaseFilter) ||
                     normalizeString(String.valueOf(product.getId())).contains(lowerCaseFilter) ||
                     normalizeString(product.getSupplierName()).contains(lowerCaseFilter) ||
                     normalizeString(product.getCategoryName()).contains(lowerCaseFilter) ||
-                    String.valueOf(product.getPrix()).contains(lowerCaseFilter) ||
+                    String.valueOf(product.getPrixHT()).contains(lowerCaseFilter) ||
+                    String.valueOf(product.getPrixTTC()).contains(lowerCaseFilter) ||
                     String.valueOf(product.getQuantite()).contains(lowerCaseFilter));
         });
     }
@@ -181,19 +181,53 @@ public class MainController {
     }
 
     private void modifyStock(Produit produit, int amount) {
+        // Sauvegarder les prix unitaires avant modification
+        double prixUnitaireHT = produit.getPrixHT() / (produit.getQuantite() > 0 ? produit.getQuantite() : 1);
+        double prixUnitaireTTC = produit.getPrixTTC() / (produit.getQuantite() > 0 ? produit.getQuantite() : 1);
+
+        // Vérifier si le nouveau stock serait positif ou nul
         if (produit.getQuantite() + amount >= 0) {
+            // Mettre à jour la quantité
             produit.setQuantite(produit.getQuantite() + amount);
+
+            // Mettre à jour les prix totaux
+            updateProductPrices(produit, prixUnitaireHT, prixUnitaireTTC);
+
+            // Si le stock atteint zéro, proposer la suppression
             if (produit.getQuantite() == 0) {
                 boolean deleteConfirmed = showDeleteConfirmation(produit);
                 if (!deleteConfirmed) {
+                    // L'utilisateur ne veut pas supprimer, remettre à 1
                     produit.setQuantite(1);
+                    updateProductPrices(produit, prixUnitaireHT, prixUnitaireTTC);
                 } else {
+                    // Supprimer le produit
                     produitDAO.delete(produit.getName());
                 }
             } else {
+                // Mettre à jour le produit dans la base de données
                 produitDAO.update(produit);
             }
+
+            // Actualiser l'affichage
             refreshTable();
+        }
+    }
+
+    /**
+     * Met à jour les prix totaux en fonction de la quantité et des prix unitaires.
+     */
+    private void updateProductPrices(Produit produit, double prixUnitaireHT, double prixUnitaireTTC) {
+        if (produit.getQuantite() > 0) {
+            // Calculer les prix totaux en fonction de la quantité
+            double newPriceHT = prixUnitaireHT * produit.getQuantite();
+            double newPriceTTC = prixUnitaireTTC * produit.getQuantite();
+            produit.setPrixHT(newPriceHT);
+            produit.setPrixTTC(newPriceTTC);
+        } else {
+            // Si la quantité est zéro, mettre les prix à zéro
+            produit.setPrixHT(0.0);
+            produit.setPrixTTC(0.0);
         }
     }
 

@@ -4,7 +4,8 @@ public class Produit {
     private String name;
     private String specifications;
     private int quantite;
-    private double prix;
+    private double prixHT;
+    private double prixTTC;
     private int categoryId;
     private int supplierId;
     private String categoryName;
@@ -12,23 +13,25 @@ public class Produit {
     private int id;
 
     // Constructeur avec id
-    public Produit(int id, String name, String specifications, int quantite, double prix, int categoryId,
+    public Produit(int id, String name, String specifications, int quantite, double prixHT, double prixTTC, int categoryId,
             int supplierId) {
         setId(id); // Ici, tu peux conserver le setId() pour initialiser l'ID
         setName(name);
         setSpecifications(specifications);
         setQuantite(quantite);
-        setPrix(prix);
+        setPrixHT(prixHT);
+        setPrixTTC(prixTTC);
         setCategoryId(categoryId);
         setSupplierId(supplierId);
     }
 
     // Constructeur sans id (l'ID sera attribué plus tard)
-    public Produit(String name, String specifications, int quantite, double prix, int categoryId, int supplierId) {
+    public Produit(String name, String specifications, int quantite, double prixHT, double prixTTC, int categoryId, int supplierId) {
         setName(name);
         setSpecifications(specifications);
         setQuantite(quantite);
-        setPrix(prix);
+        setPrixHT(prixHT);
+        setPrixTTC(prixTTC);
         setCategoryId(categoryId);
         setSupplierId(supplierId);
         this.id = 0; // L'ID est nul, il sera attribué après l'insertion dans la base de données
@@ -50,8 +53,12 @@ public class Produit {
         return quantite;
     }
 
-    public double getPrix() {
-        return prix;
+    public double getPrixHT() {
+        return prixHT;
+    }
+
+    public double getPrixTTC() {
+        return prixTTC;
     }
 
     public int getCategoryId() {
@@ -98,11 +105,18 @@ public class Produit {
         this.quantite = quantite;
     }
 
-    public void setPrix(double prix) {
-        if (prix < 0) {
+    public void setPrixHT(double prixHT) {
+        if (prixHT < 0) {
             throw new IllegalArgumentException("Price cannot be negative");
         }
-        this.prix = prix;
+        this.prixHT = prixHT;
+    }
+
+    public void setPrixTTC(double prixTTC) {
+        if (prixTTC < 0) {
+            throw new IllegalArgumentException("Price cannot be negative");
+        }
+        this.prixTTC = prixTTC;
     }
 
     public void setCategoryId(int categoryId) {
@@ -133,7 +147,8 @@ public class Produit {
                 "name='" + name + '\'' +
                 ", specifications='" + specifications + '\'' +
                 ", quantite=" + quantite +
-                ", prix=" + prix +
+                ", prixHT=" + prixHT +
+                ", prixTTC=" + prixTTC +
                 ", categoryId=" + categoryId +
                 ", supplierId=" + supplierId +
                 ", categoryName='" + categoryName + '\'' +
